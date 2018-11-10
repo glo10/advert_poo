@@ -18,7 +18,7 @@
         <?php include 'inc/menu.inc.php';?>
         <section>
             <h2>Formaulaire de saisi d'une annonce</h2>
-            <form action="../process/process_add_advert.php" method="POST">
+            <form action="../process/processAddAdvert.php" method="POST">
                 <div class="form-group">
                   <input type="text" class="form-control" name="title" placeholder="Titre">
                 </div>

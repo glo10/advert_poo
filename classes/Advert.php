@@ -89,29 +89,45 @@
       return $this->pdo->lastInsertId();
     }
 
-    public function update(){
-      $update = ' UPDATE  advert
-                  SET     title = :title,
-                          text = :text,
-                          addr = :addr,
-                          city = :city,
-                          pc = :pc,
-                          likes = :likes,
-                          category = :category
-                  WHERE   id = :id';
+    public function update($like = false){
+      $update = '';
+      $params = [];
+      if(!$like){
+        //update all properties allowed to update
+        $update = ' UPDATE  advert
+                    SET     title = :title,
+                            text = :text,
+                            addr = :addr,
+                            city = :city,
+                            pc = :pc,
+                            likes = :likes,
+                            category = :category
+                    WHERE   id_advert = :id';
+        $params =  array(
+                        ":title" => $this->getTitle(),
+                        ":text" => $this->getText(),
+                        ":addr" => $this->getAddr(),
+                        ":city" => $this->getCity(),
+                        ":pc" => $this->getPc(),
+                        ":likes" => $this->getLikes(),
+                        ":category" => $this->getCategory(),
+                        ":id" => $this->getId()
+                    );
+
+      }
+      else{
+        //update only likes
+        $update = ' UPDATE  advert
+                    SET     likes = :likes
+                    WHERE   id_advert = :id';
+        $params =  array(
+                        ":likes" => $this->getLikes(),
+                        ":id" => $this->getId()
+                    );
+      }
 
       $query = $this->pdo->prepare($update);
-      return $query->execute(
-        array(
-              "title" => $this->getTitle(),
-              "text" => $this->getText(),
-              "addr" => $this->getAddr(),
-              "city" => $this->getCity(),
-              "pc" => $this->getPc(),
-              "likes" => $this->getLikes(),
-              "category" => $this->getCategory()
-        )
-      );
+      return $query->execute($params);
     }
 
   }

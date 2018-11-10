@@ -20,22 +20,23 @@ class AdvertManager {
   }
 
   public function findAll($search = null) {
-    $select = ' SELECT  A.id_advert,
-                        A.title,
-                        A.text,
-                        A.date,
-                        A.addr,
-                        A.city,
-                        A.pc,
-                        A.likes,
-                        C.label,
-                        U.last_name,
-                        U.first_name
-                FROM    advert    A
-                JOIN    category  C
-                ON      A.category = C.id_category
-                JOIN    user      U
-                ON      A.user = U.email
+    $select = ' SELECT    A.id_advert,
+                          A.title,
+                          A.text,
+                          A.date,
+                          A.addr,
+                          A.city,
+                          A.pc,
+                          A.likes,
+                          C.label,
+                          U.last_name,
+                          U.first_name
+                FROM      advert    A
+                JOIN      category  C
+                ON        A.category = C.id_category
+                JOIN      user      U
+                ON        A.user = U.email
+                ORDER BY  A.likes   DESC
               ';
 
     if($search != null){

@@ -20,49 +20,45 @@
           <section class="col-10">
             <?php include 'inc/search.inc.php' ?>
             <h2>Liste des annonces</h2>
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Date de création</th>
-                  <th>Contenu</th>
-                  <th>Catégorie</th>
-                  <th>Donneur</th>
-                  <th>Like</th>
-                </tr>
-              </thead>
-              <tbody>
               <?php
               $html = '';
-              if($adverts){
-                foreach($adverts as $advert) {
-                  $html .= '<tr>';
-                  $html .= '<td><a href="annonce.php?id='. $advert->getId() .'">' . $advert->getTitle() . '</a></td>';
-                  $html .= '<td>' . $advert->getDate() . '</td>';
-                  $html .= '<td>' . $advert->getText() . '</td>';
-                  $html .= '<td>' . $advert->getCategory() . '</td>';
-                  $html .= '<td>' . $advert->getUser() . '</td>';
-                  $html .= '<td><span class="glyphicon glyphicon-heart text-danger"></span>&nbsp;' .$advert->getLikes() . '</td>';
-                  $html .= '</tr>';
-                }
+              if($adverts)
+              {?>
+                <table class="table table-striped table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Titre</th>
+                      <th>Date de création</th>
+                      <th>Contenu</th>
+                      <th>Catégorie</th>
+                      <th>Donneur</th>
+                      <th>Like</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <?php
+                        foreach($adverts as $advert) {
+                          $html .= '<tr data-id = "'. $advert->getId() .'">';
+                          $html .= '<td><a href="annonce.php?id='. $advert->getId() .'">' . $advert->getTitle() . '</a></td>';
+                          $html .= '<td>' . $advert->getDate() . '</td>';
+                          $html .= '<td>' . $advert->getText() . '</td>';
+                          $html .= '<td>' . $advert->getCategory() . '</td>';
+                          $html .= '<td>' . $advert->getUser() . '</td>';
+                          $html .= '<td data-id = "'. $advert->getId() .'" data-likes="'.$advert->getLikes().'"><span class="glyphicon glyphicon-heart text-danger"></span>&nbsp;' .$advert->getLikes() . '</td>';
+                          $html .= '</tr>';
+                        }
+                $html .= '</tbody>';
+              $html .= '</table>';
               }
-              else{
-                $html .='<tr>
-                            <td class="alert alert-info">Aucun annonce a été trouvé</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>';
+              else
+              {
+                $html .='<p class="alert alert-info">Aucun annonce a été trouvé</p>';
               }
-
               echo $html;
               ?>
-            </tbody>
-          </table>
         </section>
       </div>
     </div>
+    <script src="js/app.js"></script>
   </body>
 </html>
