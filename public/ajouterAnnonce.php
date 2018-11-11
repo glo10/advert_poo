@@ -13,11 +13,15 @@
     <?php include 'inc/css.inc.php' ?>
   </head>
   <body>
-    <div class="container-fluid">
+    <div class="container">
       <div class="row">
         <?php include 'inc/menu.inc.php';?>
-        <section>
-            <h2>Formaulaire de saisi d'une annonce</h2>
+        <section class="content-center">
+            <h2>Formulaire de saisi d'une annonce</h2>
+            <p class="text-info"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;Formats [jpg,png] && taille inférieur à 3Mo</p>
+            <?php if(isset($_GET['error']) && intval($_GET['error']) == -1):?>
+              <p class="alert alert-danger">L'annonce n'a pas été enregistré, le format ou la taille d'un des fichiers ne correspond pas aux exigences</p>
+            <?php endif;?>
             <form action="../process/processAddAdvert.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <input type="text" class="form-control" name="title" placeholder="Titre">
@@ -43,11 +47,10 @@
                   <textarea class="form-control" name="text" rows="3" placeholder="Votre annonce"></textarea>
                 </div>
                 <div class="form-group">
-                  <input class="noVisible" type="file" name="photos[]" multiple>
-                  <span class="glyphicon glyphicon-camera"></span>
+                  <input class="" type="file" name="photos[]" multiple>
                 </div>
                 <div class="form-group">
-                  <input type="submit" class="btn btn-success" value="Ajouter">
+                  <input type="submit" class="btn btn-success offset-8 col-4" value="Ajouter">
                 </div>
               </form>
         </section>

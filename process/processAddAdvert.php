@@ -1,6 +1,7 @@
 <?php
+  require '../classes/PhotoManager.php';
 
-  require '../classes/Advert.php';
+  $photoManager = new PhotoManager();
 
   $title              = htmlspecialchars($_POST['title']);
   $text               = htmlspecialchars($_POST['text']);
@@ -23,9 +24,11 @@
                         $category,
                         $user
                       );
-
-
-  if ($advert->save())
-    header('location:../public/index.php');
-  else
-    echo 'L\'enregisrement a échoué';
+  $photos = $photoManager->saveImagesDisc($advert,$_FILES['photos'],3000000,'../public/img');
+  if(!$photos){
+    header('location:../public/ajouterAnnonce.php?error=-1');
+  }
+  else{
+    $photoManager->saveAll($advert,$photos);
+    header('location:../public/index.php?success=1');
+  }

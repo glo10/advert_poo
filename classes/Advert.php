@@ -147,7 +147,7 @@
       $select->execute();
       $photos = [];
       while($row = $select->fetch(PDO::FETCH_OBJ)){
-        $photo = new Photo($row->id_photo,$row->src);
+        $photo = new Photo($row->src,$row->id_photo);
         $photos[] = $photo;
       }
       return $photos;

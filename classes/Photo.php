@@ -5,9 +5,10 @@
     private $src;
     private $pdo;
 
-    function __construct($id,$src) {
-      $this->id = $id;
+    function __construct($src,$id=null) {
       $this->src = $src;
+      if($id != null)
+        $this->id = $id;
 
       try {
         $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');

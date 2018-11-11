@@ -41,15 +41,6 @@ CREATE TABLE `advert` (
   `user` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `advert`
---
-
-INSERT INTO `advert` (`id_advert`, `title`, `text`, `date`, `addr`, `city`, `pc`, `likes`, `category`, `user`) VALUES
-(1, 'hello world', 'hello world', '2018-11-09 14:39:55', 'carnot', 'neuilly sur marne', '93330', 0, 1, 'glodie.tshimini@gmail.com'),
-(2, 'toto', 'helllllloooooooooooooo', '2018-11-09 17:13:03', 'carnot', 'paris', '75002', 0, 1, 'glodie.tshimini@gmail.com');
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `category`

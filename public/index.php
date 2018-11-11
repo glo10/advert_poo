@@ -19,6 +19,9 @@
       <?php include 'inc/search.inc.php' ?>
           <section>
             <h2>Liste des annonces</h2>
+            <?php if(isset($_GET['success']) && intval($_GET['success']) == 1):?>
+              <p class="alert alert-success text-center">L'annonce a été ajouté avec succès</p>
+            <?php endif;?>
               <?php
               $html = '<div class="flex-center">';
               if($adverts)
@@ -51,7 +54,7 @@
               }
               else
               {
-                $html .='<p class="alert alert-info">Aucun annonce a été trouvé</p>';
+                $html .='<p class="alert alert-info">Aucune annonce a été trouvée</p>';
               }
               $html .= '</div>';
               echo $html;

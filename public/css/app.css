@@ -1,8 +1,18 @@
 
+.container{
+    background-color: rgb(51, 51, 51);
+    color:#fff;
+}
+
+nav a{
+  color:rgb(220, 53, 69);
+}
+
 .flex-center,
 .flex-end,
 .flex-between{
   display: flex;
+  flex-wrap: wrap;
 }
 
 
@@ -12,7 +22,6 @@
 
 .flex-end{
   justify-content: flex-end;
-  flex-wrap: wrap;
 }
 
 .flex-between{
@@ -27,6 +36,11 @@
 .card-body{
   width:22rem;
   height:22rem;
+  color:darkgrey;
+}
+
+.card{
+  margin-bottom: 23rem;
 }
 
 .card-body{
@@ -45,4 +59,10 @@
 
 .card a{
   color: inherit;
+}
+
+.content-center{
+  display: flex;
+  margin: 10px auto;
+  flex-direction: column;
 }
