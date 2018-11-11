@@ -21,7 +21,7 @@
 
 
     public function setId($id) { return $this->id = $id; }
-    public function setPswd($src) { return $this->src = $src; }
+    public function setSrc($src) { return $this->src = $src; }
 
     public function save(){
       $insert = 'INSERT INTO photo(
@@ -42,12 +42,12 @@
     public function update(){
       $update = ' UPDATE  photo
                   SET     src = :src
-                  WHERE   id = :id';
+                  WHERE   id_photo = :id';
 
       $query = $this->pdo->prepare($update);
       return $query->execute(
         array(
-          ":id" => $this->getId(),
+          ":id_photo" => $this->getId(),
           ":src" => $this->getSrc()
         )
       );

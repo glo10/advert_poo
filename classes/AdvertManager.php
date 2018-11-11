@@ -20,30 +20,30 @@ class AdvertManager {
   }
 
   public function findAll($search = null) {
-    $select = ' SELECT    A.id_advert,
-                          A.title,
-                          A.text,
-                          A.date,
-                          A.addr,
-                          A.city,
-                          A.pc,
-                          A.likes,
-                          C.label,
-                          U.last_name,
-                          U.first_name
-                FROM      advert    A
-                JOIN      category  C
-                ON        A.category = C.id_category
-                JOIN      user      U
-                ON        A.user = U.email
-                ORDER BY  A.likes   DESC
+    $select = ' SELECT          A.id_advert,
+                                A.title,
+                                A.text,
+                                A.date,
+                                A.addr,
+                                A.city,
+                                A.pc,
+                                A.likes,
+                                C.label,
+                                U.last_name,
+                                U.first_name
+                FROM            advert    A
+                LEFT  JOIN      category  C
+                ON              A.category = C.id_category
+                JOIN            user      U
+                ON              A.user = U.email
               ';
 
     if($search != null){
       $select .= '
-                WHERE   C.label = :label OR A.title = :title';
+                WHERE   C.label = :label OR A.title = :title ';
     }
 
+    $select .= 'ORDER BY        A.likes   DESC';
 
     $query = $this->pdo->prepare($select);
 
@@ -79,7 +79,8 @@ class AdvertManager {
   }
 
   public function save(Advert $advert, Photo $photo){
-      $lastId = null;
+      $lastIdAdvert = null;
+      $lastIdPhoto = null;
       $this->pdo->beginTransaction();
 
       //INSERT INTO advert
@@ -115,40 +116,43 @@ class AdvertManager {
         $queryAdvert->execute($paramsAdvert)
       )
       {
+        $lastIdAdvert = $this->pdo->lastInsertId();
+        $advert->setId($lastIdAdvert);
         //INSERT INTO photo
-        $lastId = $this->pdo->lastInsertId();
         $insertPhoto = 'INSERT INTO photo(src) VALUES(:src)';
         $queryPhoto = $this->pdo->prepare($insertPhoto);
 
-        $queryPhoto->bindParam('src',$photo->getSrc());
+        $queryPhoto->bindParam(':src',$photo->getSrc());
         if($queryPhoto->execute())
         {
-          $this->pdo->commit();
-        }
-        else{
-          $this->pdo->rollback();
+          //INSERT INTO photo_advert
+          $lastIdPhoto = $this->pdo->lastInsertId();
+          $photo->setId($lastIdPhoto);
+          $queryPhotoAdvert = 'INSERT INTO photo_advert(
+                                                        id_advert,
+                                                        id_photo
+                                                      )
+                                      VALUES(
+                                                        :id_advert,
+                                                        :id_photo
+                                            )';
+          $insertPhotoAdvert = $this->pdo->prepare($queryPhotoAdvert);
+          $insertPhotoAdvert->bindParam(':id_advert',$advert->getId());
+          $insertPhotoAdvert->bindParam(':id_photo',$photo->getId());
+
+          if($insertPhotoAdvert->execute())
+          {
+            $this->pdo->commit();
+            return $advert->getId();
+          }
         }
       }
-      else{
-        $this->pdo->rollback();
-      }
-      return lastId();
+      $this->pdo->rollback();
+      return null;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
   public function findById($id){
-    $query = $this->pdo->prepare('SELECT * FROM player WHERE id = :id');
+    $query = $this->pdo->prepare('SELECT * FROM advert WHERE id = :id');
     $query->bindParam(':id',intval($id));
     $query->execute();
     $row = $query->fetch(PDO::FETCH_OBJ);

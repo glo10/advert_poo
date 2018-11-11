@@ -18,7 +18,7 @@
         <?php include 'inc/menu.inc.php';?>
         <section>
             <h2>Formaulaire de saisi d'une annonce</h2>
-            <form action="../process/processAddAdvert.php" method="POST">
+            <form action="../process/processAddAdvert.php" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                   <input type="text" class="form-control" name="title" placeholder="Titre">
                 </div>
@@ -41,6 +41,10 @@
                 </div>
                 <div class="form-group">
                   <textarea class="form-control" name="text" rows="3" placeholder="Votre annonce"></textarea>
+                </div>
+                <div class="form-group">
+                  <input class="noVisible" type="file" name="photos[]" multiple>
+                  <span class="glyphicon glyphicon-camera"></span>
                 </div>
                 <div class="form-group">
                   <input type="submit" class="btn btn-success" value="Ajouter">

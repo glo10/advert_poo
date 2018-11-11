@@ -1,5 +1,5 @@
 <?php
-
+  require_once 'Photo.php';
 
   class Advert {
     private $id;
@@ -12,6 +12,7 @@
     private $likes;
     private $category;
     private $user;
+    private $photoCollection;
     private $pdo;
 
     function __construct($title, $text, $date,$addr,$city, $pc,$likes,$category,$user) {
@@ -42,6 +43,7 @@
     public function getLikes() { return $this->likes; }
     public function getCategory() { return $this->category; }
     public function getUser() { return $this->user; }
+    public function getPhotoCollection() { return $this->photoCollection; }
 
 
     public function setId($id) { return $this->id = $id; }
@@ -54,6 +56,7 @@
     public function setLikes($likes) { return $this->likes = $likes; }
     public function setCategory($category) { return $this->category = $category; }
     public function setUser($user) { return $this->user = $user; }
+    public function setPhotoCollection($photos) { return $this->photoCollection = $photos; }
 
     public function save(){
       $insert = 'INSERT INTO advert(
@@ -128,6 +131,41 @@
 
       $query = $this->pdo->prepare($update);
       return $query->execute($params);
+    }
+
+    public function getPhotos(){
+      $query = 'SELECT  P.id_photo,
+                        P.src
+                FROM    photo P
+                JOIN    photo_advert S
+                ON      S.id_photo = P.id_photo
+                WHERE   S.id_advert = :id_advert';
+
+      $select = $this->pdo->prepare($query);
+      $id = $this->getId();
+      $select->bindParam(':id_advert',$id);
+      $select->execute();
+      $photos = [];
+      while($row = $select->fetch(PDO::FETCH_OBJ)){
+        $photo = new Photo($row->id_photo,$row->src);
+        $photos[] = $photo;
+      }
+      return $photos;
+    }
+
+    public function getMainPhoto(){
+      foreach($this->getPhotoCollection() as $obj => $photo){
+        return $photo;
+      }
+    }
+
+    public function showLessText($length){
+      $text = $this->getText();
+      $length = intval($length);
+      if(strlen($text) > $length)
+        return substr($text,0,($length-3)).'...';
+      else
+        return $text;
     }
 
   }
