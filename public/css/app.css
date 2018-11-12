@@ -66,3 +66,19 @@ nav a{
   margin: 10px auto;
   flex-direction: column;
 }
+
+.full,
+.full>.card-body{
+  width: 100%!important;
+  height: 100%!important;
+}
+
+.full{
+  text-align: justify;
+  font-size: 1.8rem;
+}
+
+.img-detail{
+  width:30rem;
+  height:30rem;
+}

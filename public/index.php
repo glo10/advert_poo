@@ -44,7 +44,7 @@
                       $html .= '<p><span class="glyphicon glyphicon-tag">&nbsp;' . $advert->getCategory() . '</span></p>';
                       $html .= '<p><span class="glyphicon glyphicon-user">&nbsp;' . $advert->getUser() . '</span></p>';
                       $html .= '<div class="flex-between">';
-                      $html .= '<div><a href="annonce.php?id='. $advert->getId() .'"><span class="glyphicon glyphicon-eye-open"></span></a></div>';
+                      $html .= '<div><a href="annonceDetail.php?id='. $advert->getId() .'"><span class="glyphicon glyphicon-eye-open"></span></a></div>';
                       $html .= '<div><span data-id="'.$advert->getId().'" data-likes="'.$advert->getLikes().'" class="glyphicon glyphicon-heart text-danger"></span>&nbsp;<span>' .$advert->getLikes() . '</span></div>';
                       $html .= '</div>';
                     $html .= '</div>';

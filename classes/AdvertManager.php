@@ -39,7 +39,7 @@ class AdvertManager {
 
     if($search != null){
       $select .= '
-                WHERE   C.label = :label OR A.title = :title ';
+                WHERE   C.label LIKE :label OR A.title LIKE :title OR A.city LIKE :city ';
     }
 
     $select .= 'ORDER BY        A.likes   DESC,date DESC';
@@ -47,8 +47,10 @@ class AdvertManager {
     $query = $this->pdo->prepare($select);
 
     if($search != null){
+      $search = '%'.$search.'%';
       $query->bindParam(':label',$search);
       $query->bindParam(':title',$search);
+      $query->bindParam(':city',$search);
     }
 
     $adverts = [];
@@ -98,7 +100,7 @@ class AdvertManager {
     $select = $this->pdo->prepare($query);
     $select->bindParam(':id',intval($id));
     $select->execute();
-    $row = $query->fetch(PDO::FETCH_OBJ);
+    $row = $select->fetch(PDO::FETCH_OBJ);
 
     if(!$row) return null;
 
