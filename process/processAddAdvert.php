@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require '../classes/PhotoManager.php';
 
   $photoManager = new PhotoManager();
@@ -11,7 +12,7 @@
   $pc                 = htmlspecialchars($_POST['pc']);
   $likes              = 0;
   $category           = htmlspecialchars($_POST['category']);
-  $user               = 'glodie.tshimini@gmail.com';//get session value when member space will be implemented
+  $user               = $_SESSION['email'];
 
   $advert = new Advert(
                         $title,

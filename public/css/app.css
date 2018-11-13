@@ -49,7 +49,7 @@ nav a{
 
 .card-img-top{
   width: 100%;
-  height: 100%;
+  min-height: 100%!important;
 }
 
 .card-body>*{
@@ -81,4 +81,32 @@ nav a{
 .img-detail{
   width:30rem;
   height:30rem;
+}
+
+
+/********************************SIGN&&SIGNUP******************************/
+#signUp{
+    display: none;
+}
+
+header,
+#top{
+    display: flex;
+    margin:50px auto;
+}
+
+header{
+    justify-content: space-between;
+}
+
+#top{
+    justify-content: flex-start;
+}
+
+#top>button{
+  margin-top:10px;
+  margin-bottom:10px;
+}
+#top>button:last-of-type{
+  margin-left:10px;
 }

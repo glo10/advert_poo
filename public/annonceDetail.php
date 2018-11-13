@@ -1,4 +1,5 @@
 <?php
+  session_start();
   require_once '../classes/AdvertManager.php';
   require_once '../classes/Advert.php';
   $advertManager = new AdvertManager();
@@ -10,9 +11,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>Le don coin</title>
     <?php include 'inc/css.inc.php' ?>
+    <title>Ledoncoin</title>
   </head>
   <body>
     <div class="container">

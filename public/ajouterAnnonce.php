@@ -1,4 +1,7 @@
 <?php
+  session_start();
+  if(empty($_SESSION['email']))
+    header('location:index.php?connect=-1');
   require_once '../classes/CategoryManager.php';
   require_once '../classes/Category.php';
   $categoryManager = new CategoryManager();
@@ -8,9 +11,8 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <title>Ajouter une annonce</title>
     <?php include 'inc/css.inc.php' ?>
+    <title>Ajouter une annonce</title>
   </head>
   <body>
     <div class="container">

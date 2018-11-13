@@ -1,68 +1,75 @@
 <?php
-  require_once '../classes/AdvertManager.php';
-  require_once '../classes/Advert.php';
-  require_once '../classes/MyFunctions.php';
-
-  $advertManager = new AdvertManager();
-  $search = isset($_POST['search'])?htmlspecialchars($_POST['search']):null;
-  $adverts = $advertManager->findAll($search);
+    session_start();
+    if(isset($_SESSION['email'])){
+        header('location:accueil.php');
+    }
 ?>
-
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Le don coin</title>
+<html lang="en">
+<head>
     <?php include 'inc/css.inc.php' ?>
-  </head>
-  <body>
+    <title>Connexion/Inscription</title>
+</head>
+<body>
     <div class="container">
-      <?php include 'inc/menu.inc.php';?>
-      <?php include 'inc/search.inc.php' ?>
-          <section>
-            <h2>Liste des annonces</h2>
-            <?php if(isset($_GET['success']) && intval($_GET['success']) == 1):?>
-              <p class="alert alert-success text-center">L'annonce a été ajouté avec succès</p>
-            <?php endif;?>
-              <?php
-              $html = '<div class="flex-center">';
-              if($adverts)
-              {
-                foreach($adverts as $advert)
-                {
+        <?php include 'inc/menu.inc.php';?>
+        <?php include 'inc/search.inc.php' ?>
 
-                  $photos = $advert->getPhotos();
-                  $advert->setPhotoCollection($photos);
+        <?php if(isset($_GET['connect']) && intval($_GET['connect']) == -1) :?>
+        <div>
+          <p class="alert alert-info text-center">Pour ajouter une annonce, veuillez vous connecter ou vous inscrire</p>
+        </div>
+        <?php endif;?>
+        <div id="top">
+            <button class="btn btn-default btnSign" data-content="#signIn" data-hide="#signUp">Connexion</button>
+            <button class="btn btn-default btnSign" data-content="#signUp" data-hide="#signIn">Inscription</button>
+        </div>
+        <div>
+        <p id="userMsg" class="text-info"></p>
+        </div>
+        <div id="signIn">
+            <h3 class="text-info">Connexion</h3>
+            <form data-url="../process/processSignIn.php">
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control col-4" placeholder="Saisir votre email" required>
+                </div>
 
-                  $src = ($advert->getMainPhoto())?$advert->getMainPhoto()->getSrc():'no_image.png';
-                  $idPhoto = ($advert->getMainPhoto())?$advert->getMainPhoto()->getId():-1;
+                <div class="form-group">
+                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" required>
+                </div>
 
-                  $html .= '<div class="card">';
-                    $html .= '<img data-idPhoto="'.$idPhoto.'" class="card-img-top" src="img/'.$src.'" alt="Photo principale de l\'annonce">';
-                    $html .= '<div class="card-body">';
-                      $html .= '<h5 class="card-title glyphicon glyphicon-header">&nbsp;'.$advert->getTitle().'</h5>';
-                      $html .= '<p><span class="glyphicon glyphicon-map-marker">&nbsp;'.$advert->getCity().'</span></p>';
-                      $html .= '<p class="glyphicon glyphicon-list-alt card-text">&nbsp;'.MyFunctions::showLessText($advert->getText(),15).'</p>';
-                      $html .= '<p><span class="glyphicon glyphicon-tag">&nbsp;'.$advert->getCategory().'</span></p>';
-                      $html .= '<p><span class="glyphicon glyphicon-user">&nbsp;'.MyFunctions::showLessText($advert->getUser(),15).'</span></p>';
-                      $html .= '<div class="flex-between">';
-                      $html .= '<div><a href="annonceDetail.php?id='. $advert->getId() .'"><span class="glyphicon glyphicon-eye-open"></span></a></div>';
-                      $html .= '<div><span data-id="'.$advert->getId().'" data-likes="'.$advert->getLikes().'" class="glyphicon glyphicon-heart text-danger"></span>&nbsp;<span>' .$advert->getLikes() . '</span></div>';
-                      $html .= '</div>';
-                    $html .= '</div>';
-                  $html .= '</div>';
+                <div class="form-group">
+                    <input type="submit" class="btn btn-success col-2" value="connexion" data-action="0">
+                </div>
+            </form>
+        </div>
 
-                }
-              }
-              else
-              {
-                $html .='<p class="alert alert-info">Aucune annonce a été trouvée</p>';
-              }
-              $html .= '</div>';
-              echo $html;
-              ?>
-        </section>
+        <div id="signUp">
+            <h3 class="text-info">Inscription</h3>
+            <form data-url="../process/processSignUp.php">
+                <div class="form-group">
+                    <input type="text" name="lastName" class="form-control col-4" placeholder="Saisir votre nom">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="firstName" class="form-control col-4" placeholder="Saisir votre prénom">
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" class="form-control col-4" placeholder="Saisir votre email">
+                </div>
+
+                 <div class="form-group">
+                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-info col-2" value="Inscription"  data-action="1">
+                </div>
+            </form>
+        </div>
     </div>
-    <script src="js/app.js"></script>
-  </body>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="js/appJquery.js"></script>
+</body>
 </html>

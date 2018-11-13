@@ -3,8 +3,10 @@
   class User {
     private $email;
     private $pswd;
+    private $firstName;
+    private $lastName;
     private $pdo;
-    private $advertCollection[];
+    private $advertCollection;
 
     function __construct($email,$pswd,array $advertCollection = null) {
       $this->email = $email;
@@ -21,30 +23,39 @@
 
     public function getEmail() { return $this->email; }
     public function getPswd() { return $this->pswd; }
+    public function getFirstName() { return $this->firstName; }
+    public function getLastName() { return $this->lastName; }
     public function getAdvertCollection() { return $this->advertCollection; }
 
 
     public function setEmail($email) { return $this->email = $email; }
     public function setPswd($pswd) { return $this->pswd = $pswd; }
+    public function setFirstName($firstName) { return $this->firstName = $firstName; }
+    public function setLastName($lastName) { return $this->lastName = $lastName; }
     public function setAdvertCollection(array $advertCollection) { return $this->advertCollection[] = $advertCollection; }
 
     public function save(){
-      $insert = 'INSERT INTO user(
+      $query = 'INSERT INTO user(
                                         email,
-                                        pswd
+                                        pswd,
+                                        last_name,
+                                        first_name
                                   )
                                   VALUES(
                                         :email,
-                                        :pswd
+                                        :pswd,
+                                        :last_name,
+                                        :first_name
                                   )';
-      $query = $this->pdo->prepare($insert);
-      $query->execute(
+      $insert = $this->pdo->prepare($query);
+      return $insert->execute(
         array(
           ":email" => $this->getEmail(),
-          ":pswd" => $this->getPswd()
+          ":pswd" =>  password_hash($this->getPswd(),PASSWORD_BCRYPT),
+          ":last_name" => $this->getLastName(),
+          ":first_name" => $this->getFirstName()
         )
       );
-      return $this->pdo->lastInsertId();
     }
 
     public function update(){
@@ -59,6 +70,31 @@
           ":id" => $this->getId()
         )
       );
+    }
+
+    public function connect(){
+      $request = 'SELECT *
+                  FROM user
+                  WHERE email=:email';
+
+      $select = $this->pdo->prepare($request);
+      $email = $this->getEmail();
+      $select->bindParam(':email',$email);
+
+      if($select->execute()){
+          $result = $select->fetch(PDO::FETCH_OBJ);
+
+          if(password_verify($this->getPswd(),$result->pswd))
+          {
+            $this->setFirstName($result->first_name);
+            $this->setLastName($result->last_name);
+            return $this;
+          }
+          else
+          {
+            return null;
+          }
+      }
     }
 
   }
