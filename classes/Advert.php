@@ -159,13 +159,4 @@
       }
     }
 
-    public function showLessText($length){
-      $text = $this->getText();
-      $length = intval($length);
-      if(strlen($text) > $length)
-        return substr($text,0,($length-3)).'...';
-      else
-        return $text;
-    }
-
   }
