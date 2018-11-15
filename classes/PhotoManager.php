@@ -30,8 +30,9 @@ class PhotoManager {
 
 
       $format = substr($fileType, 0, 5);
-      $extension = pathinfo($fileName,PATHINFO_EXTENSION);
-      $extensions = ['jpg','JPG','jpeg','JPEG','png','PNG'];
+      $extension = strtolower(pathinfo($fileName,PATHINFO_EXTENSION));
+
+      $extensions = ['jpg','jpeg','png'];
 
       $dir = $baseUrl.'\\'.$advert->getId();
 

@@ -33,12 +33,12 @@ CREATE TABLE `advert` (
   `title` varchar(80) NOT NULL,
   `text` text NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `addr` varchar(120) NOT NULL,
-  `city` varchar(120) NOT NULL,
+  `addr` varchar(80) NOT NULL,
+  `city` varchar(80) NOT NULL,
   `pc` varchar(5) NOT NULL,
   `likes` int(255) NOT NULL DEFAULT '0',
   `category` int(11) NOT NULL,
-  `user` varchar(150) NOT NULL
+  `user` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -57,7 +57,8 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`id_category`, `label`) VALUES
 (1, 'vêtements'),
-(2, 'électronique');
+(2, 'électronique'),
+(3, 'autres');
 
 -- --------------------------------------------------------
 
@@ -88,7 +89,7 @@ CREATE TABLE `photo_advert` (
 --
 
 CREATE TABLE `user` (
-  `email` varchar(150) NOT NULL,
+  `email` varchar(80) NOT NULL,
   `pswd` varchar(60) NOT NULL,
   `first_name` varchar(80) NOT NULL DEFAULT 'The girl has no name',
   `last_name` varchar(80) NOT NULL DEFAULT 'The girl has no name'

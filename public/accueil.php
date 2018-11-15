@@ -23,9 +23,7 @@
       <?php include 'inc/search.inc.php' ?>
           <section>
             <h2>Liste des annonces</h2>
-            <?php if(isset($_GET['success']) && intval($_GET['success']) == 1):?>
-              <p class="alert alert-success text-center">L'annonce a été ajouté avec succès</p>
-            <?php endif;?>
+            <p id="userMsg" class="text-info"></p>
               <?php
               $html = '<div class="flex-center">';
               if($adverts)

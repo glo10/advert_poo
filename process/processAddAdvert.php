@@ -3,7 +3,6 @@
   require '../classes/PhotoManager.php';
 
   $photoManager = new PhotoManager();
-
   $title              = htmlspecialchars($_POST['title']);
   $text               = htmlspecialchars($_POST['text']);
   $date               = '0000-00-00';
@@ -27,9 +26,9 @@
                       );
   $photos = $photoManager->saveImagesDisc($advert,$_FILES['photos'],3000000,'../public/img');
   if(!$photos){
-    header('location:../public/ajouterAnnonce.php?error=-1');
+    echo 'ajout non ok';
   }
   else{
     $photoManager->saveAll($advert,$photos);
-    header('location:../public/index.php?success=1');
+    echo 'ajout ok';
   }
