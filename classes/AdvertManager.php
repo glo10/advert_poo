@@ -79,44 +79,46 @@ class AdvertManager {
     return $adverts;
   }
 
-  public function findById($id){
+  public function findByUser($user){
     $query = 'SELECT            A.id_advert,
                                 A.title,
                                 A.text,
-                                A.date,
+                                DATE_FORMAT(A.date,"%d/%m/%Y %H:%i") AS date,
                                 A.addr,
                                 A.city,
                                 A.pc,
                                 A.likes,
                                 C.label,
-                                U.last_name,
-                                U.first_name
+                                A.user
                 FROM            advert    A
                 LEFT  JOIN      category  C
                 ON              A.category = C.id_category
-                JOIN            user      U
-                ON              A.user = U.email
-                WHERE           A.id_advert = :id';
+                WHERE           A.user = :email
+                ORDER BY        A.date DESC';
     $select = $this->pdo->prepare($query);
-    $select->bindParam(':id',intval($id));
-    $select->execute();
-    $row = $select->fetch(PDO::FETCH_OBJ);
+    $select->execute([':email'=> $user->getEmail()]);
 
-    if(!$row) return null;
+    $rows = $select->fetchAll(PDO::FETCH_OBJ);
 
-    $advert = new Advert(
-                          $row->title,
-                          $row->text,
-                          $row->date,
-                          $row->addr,
-                          $row->city,
-                          $row->pc,
-                          $row->likes,
-                          $row->label,
-                          $row->first_name.' '.$row->last_name
-                        );
-    $advert->setId($row->id_advert);
-    return $advert;
+    if(!$rows) return null;
+
+    $adverts = [];
+    foreach($rows as $row){
+      $advert = new Advert(
+                            $row->title,
+                            $row->text,
+                            $row->date,
+                            $row->addr,
+                            $row->city,
+                            $row->pc,
+                            $row->likes,
+                            $row->label,
+                            $row->user
+                          );
+      $advert->setId($row->id_advert);
+      array_push($adverts,$advert);
+    }
+    return $adverts;
   }
 
   public function deleteById($id){

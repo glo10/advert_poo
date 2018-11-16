@@ -8,11 +8,12 @@
     private $pdo;
     private $advertCollection;
 
-    function __construct($email,$pswd,array $advertCollection = null) {
+    function __construct($email,$pswd = null,array $advertCollection = null) {
       $this->email = $email;
-      $this->pswd = $pswd;
+      if($pswd !== null)
+        $this->pswd = $pswd;
       if($advertCollection !== null)
-        $this->advertCollection[] = $advertCollection;
+        $this->advertCollection = $advertCollection;
 
       try {
         $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
@@ -32,7 +33,7 @@
     public function setPswd($pswd) { return $this->pswd = $pswd; }
     public function setFirstName($firstName) { return $this->firstName = $firstName; }
     public function setLastName($lastName) { return $this->lastName = $lastName; }
-    public function setAdvertCollection(array $advertCollection) { return $this->advertCollection[] = $advertCollection; }
+    public function setAdvertCollection(array $advertCollection) { return $this->advertCollection = $advertCollection; }
 
     public function save(){
       $query = 'INSERT INTO user(
