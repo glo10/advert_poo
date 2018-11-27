@@ -25,7 +25,6 @@
         else{
           echo 'La combinaison de l\'email et du mot de passe n\'est pas correcte';
         }
-
     }
     else
     {

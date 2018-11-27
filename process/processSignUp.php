@@ -28,9 +28,8 @@
         }
         else
         {
-          echo 'Inscription échouée, veuillez recommencer';
+          echo $user->getEmail().' est dejà utilisé par un autre compte !';
         }
-
     }
     else
     {

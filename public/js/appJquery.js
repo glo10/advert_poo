@@ -37,6 +37,8 @@
                       default:
                           if(regex.test(response))
                             $('#userMsg').text('L\'annonce n\'a pas été enregistré, veuillez respecter les recommandations ci-dessous');
+                          else
+                            $('#userMsg').text(response);
                       break;
                     }
                 },

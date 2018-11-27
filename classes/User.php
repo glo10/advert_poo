@@ -82,20 +82,16 @@
       $email = $this->getEmail();
       $select->bindParam(':email',$email);
 
-      if($select->execute()){
-          $result = $select->fetch(PDO::FETCH_OBJ);
-
-          if(password_verify($this->getPswd(),$result->pswd))
-          {
-            $this->setFirstName($result->first_name);
-            $this->setLastName($result->last_name);
-            return $this;
-          }
-          else
-          {
-            return null;
-          }
+      $select->execute();
+      if($result = $select->fetch(PDO::FETCH_OBJ))
+      {
+        if(password_verify($this->getPswd(),$result->pswd))
+        {
+          $this->setFirstName($result->first_name);
+          $this->setLastName($result->last_name);
+          return $this;
+        }
       }
+      return null;
     }
-
   }
