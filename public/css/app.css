@@ -83,7 +83,14 @@ nav a{
   height:30rem;
 }
 
+h2{
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
+tbody{
+  text-transform: capitalize;
+}
 /********************************SIGN&&SIGNUP******************************/
 #signUp{
     display: none;
