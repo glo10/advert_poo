@@ -104,7 +104,7 @@ class PhotoManager {
                             ":city"     => $advert->getCity(),
                             ":pc"       => $advert->getPc(),
                             ":category" => $advert->getCategory(),
-                            ":user"     => $advert->getUser()
+                            ":user"     => $advert->getUser()->getEmail()
                         );
       if(
         $queryAdvert->execute($paramsAdvert)

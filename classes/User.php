@@ -1,5 +1,5 @@
 <?php
-
+  //require_once 'MyPdo.php';
   class User {
     private $email;
     private $pswd;
@@ -8,8 +8,12 @@
     private $pdo;
     private $advertCollection;
 
-    function __construct($email,$pswd = null,array $advertCollection = null) {
+    function __construct($email,$firstName = null,$lastName = null,$pswd = null,array $advertCollection = null) {
       $this->email = $email;
+      if($firstName !== null)
+        $this->firstName = $firstName;
+      if($lastName !== null)
+        $this->lastName = $lastName;
       if($pswd !== null)
         $this->pswd = $pswd;
       if($advertCollection !== null)

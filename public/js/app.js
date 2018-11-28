@@ -1,13 +1,13 @@
 (function(){
     let likes = document.querySelectorAll('.glyphicon.glyphicon-heart');
-
     likes.forEach(BtnLike => {
       BtnLike.addEventListener('click',e => {
         let span = e.target;
+        console.log('span',span);
         let advert = {
           id : span.dataset.id,
           likes : span.dataset.likes,
-          update : true
+          isUpdate : true
         };
 
         fetch('../process/processAddLike.php',{

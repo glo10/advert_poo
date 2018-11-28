@@ -19,7 +19,7 @@
   <body>
     <div class="container">
       <?php include 'inc/menu.inc.php'?>
-      <h2 class="display-6">Liste de mes annonces</h2>
+      <h2 class="display-6">Mes annonces</h2>
       <?php if($adverts) :?>
         <?php $user->setAdvertCollection($adverts);?>
         <table class="table table-responsive">

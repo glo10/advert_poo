@@ -46,7 +46,7 @@
                   <input type="text" class="form-control" name="city" placeholder="Ville" pattern=".{1,80}" required>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="pc" placeholder="Code postale" pattern="[0-9]{5}" required>
+                  <input type="text" class="form-control" name="pc" placeholder="Code postale" pattern="[1-9][0-9]{4}" required>
                 </div>
                 <div class="form-group">
                   <textarea class="form-control" name="text" rows="3" placeholder="Votre annonce" required></textarea>

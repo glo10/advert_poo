@@ -3,8 +3,15 @@
   require_once '../classes/AdvertManager.php';
   require_once '../classes/Advert.php';
   $advertManager = new AdvertManager();
+  $advert = null;
   if(isset($_GET['id']) && preg_match('/[0-9]*/',$_GET['id'])){
-      $advert = $advertManager->findById(htmlspecialchars(intval($_GET['id'])));
+      try
+      {
+        $advert = $advertManager->findById(intval($_GET['id']));
+      } catch (FilterException $e)
+      {
+        echo $e->showError();
+      }
   }
 ?>
 
@@ -24,8 +31,18 @@
               $html = '';
               if($advert)
               {
-                $photos = $advert->getPhotos();
+                $photos = null;
+                if($advert->getPhotos())
+                {
+                  $photos = $advert->getPhotos();
+                }
+                else
+                {
+                  $photos = array(0 => new Photo('no_image.png',-1));
+                }
+
                 $html .= '<div class="flex-center">';
+
                 foreach($photos as $photo)
                 {
                   $html .= '<div>
@@ -36,11 +53,12 @@
                 $html .= '</div>';
                 $html .= '<div class="card full">';
                   $html .= '<div class="card-body">';
-                    $html .= '<h3 class="card-title glyphicon glyphicon-header">&nbsp;'.$advert->getTitle().'</h3>';
-                    $html .= '<p><span class="glyphicon glyphicon-map-marker">&nbsp;'.$advert->getCity().'</span></p>';
-                    $html .= '<p class="glyphicon glyphicon-list-alt card-text">&nbsp;'.$advert->getText().'</p>';
-                    $html .= '<p><span class="glyphicon glyphicon-tag">&nbsp;' . $advert->getCategory() . '</span></p>';
-                    $html .= '<p><span class="glyphicon glyphicon-user">&nbsp;' . $advert->getUser() . '</span></p>';
+                    $html .= '<h3 class="card-title"><span class="glyphicon glyphicon-text-width"></span>&nbsp;'.$advert->getTitle().'</h3>';
+                    $html .= '<p><span class="glyphicon glyphicon-map-marker"></span>&nbsp;'.$advert->getCity().'</p>';
+                    $html .= '<p class="card-text"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;'.$advert->getText().'</p>';
+                    $html .= '<p><span class="glyphicon glyphicon-tag"></span>&nbsp;' . $advert->getCategory() . '</p>';
+                    $html .= '<p><span class="glyphicon glyphicon-user"></span>&nbsp;' .$advert->getUser()->getFirstName() . '&nbsp;'.$advert->getUser()->getLastName().'</p>';
+                    $html .= '<p><span class="glyphicon glyphicon-envelope"></span>&nbsp;'.$advert->getUser()->getEmail().'</p>';
                     $html .= '<div class="flex-between">';
                       $html .= '<div>
                                     <span data-id="'.$advert->getId().'" data-likes="'.$advert->getLikes().'" class="glyphicon glyphicon-heart text-danger"></span>&nbsp;
