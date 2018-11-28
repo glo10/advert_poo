@@ -7,7 +7,14 @@
 
   $advertManager = new AdvertManager();
   $search = isset($_POST['search'])?htmlspecialchars($_POST['search']):null;
-  $adverts = $advertManager->findAll($search);
+  $adverts = null;
+  try
+  {
+    $adverts = $advertManager->findAll($search);
+  } catch (FilterException $e)
+  {
+    echo $e->showError();
+  }
 
 ?>
 

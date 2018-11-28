@@ -1,4 +1,5 @@
 <?php
+  require_once '../classes/FilterException.php';
   //require_once 'MyPdo.php';
   class User {
     private $email;
@@ -9,15 +10,15 @@
     private $advertCollection;
 
     function __construct($email,$firstName = null,$lastName = null,$pswd = null,array $advertCollection = null) {
-      $this->email = $email;
+      $this->setEmail($email);
       if($firstName !== null)
-        $this->firstName = $firstName;
+        $this->setFirstName($firstName);
       if($lastName !== null)
-        $this->lastName = $lastName;
+        $this->setLastName($lastName);
       if($pswd !== null)
-        $this->pswd = $pswd;
+        $this->setPswd($pswd);
       if($advertCollection !== null)
-        $this->advertCollection = $advertCollection;
+        $this->setAdvertCollection($advertCollection);
 
       try {
         $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
@@ -33,13 +34,44 @@
     public function getAdvertCollection() { return $this->advertCollection; }
 
 
-    public function setEmail($email) { return $this->email = $email; }
-    public function setPswd($pswd) { return $this->pswd = $pswd; }
-    public function setFirstName($firstName) { return $this->firstName = $firstName; }
-    public function setLastName($lastName) { return $this->lastName = $lastName; }
-    public function setAdvertCollection(array $advertCollection) { return $this->advertCollection = $advertCollection; }
+    public function setEmail($email)
+    {
+      if(filter_var($email,FILTER_VALIDATE_EMAIL))
+        return $this->email = $email;
+      else
+        throw new FilterException('L\'email n\'est pas au bon format');
+    }
 
-    public function save(){
+    public function setPswd($pswd)
+    {
+      if(strlen($pswd) >= 2)
+        return $this->pswd = $pswd;
+      else
+        throw new FilterException('Le mot de passe n\'a pas été hashé correctement');
+    }
+
+    public function setFirstName($firstName)
+    {
+      $firstNameClean = filter_var($firstName,FILTER_SANITIZE_STRING);
+      return $this->firstName = $firstNameClean;
+    }
+
+    public function setLastName($lastName)
+    {
+      $lastNameClean = filter_var($lastName,FILTER_SANITIZE_STRING);
+      return $this->lastName = $lastNameClean;
+    }
+
+    public function setAdvertCollection(array $advertCollection)
+    {
+      if(is_array($advertCollection))
+        return $this->advertCollection = $advertCollection;
+      else
+        throw new FilterException('Le format des annonces n\est pas correct');
+    }
+
+    public function save()
+    {
       $query = 'INSERT INTO user(
                                         email,
                                         pswd,
@@ -63,7 +95,8 @@
       );
     }
 
-    public function update(){
+    public function update()
+    {
       $update = ' UPDATE  user
                   SET     pswd = :pswd
                   WHERE   email = :email';
@@ -77,7 +110,8 @@
       );
     }
 
-    public function connect(){
+    public function connect()
+    {
       $request = 'SELECT *
                   FROM user
                   WHERE email=:email';

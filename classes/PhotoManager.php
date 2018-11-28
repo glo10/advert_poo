@@ -170,7 +170,8 @@ class PhotoManager {
     }
   }
 
-    public function diverse_array($vector) {
+  public function diverse_array($vector)
+  {
     $result = array();
     foreach($vector as $key1 => $value1)
         foreach($value1 as $key2 => $value2)
@@ -178,12 +179,13 @@ class PhotoManager {
     return $result;
   }
 
-  public function clearDir($dir){
-       $files = glob($dir.'/*');
-       foreach($files as $file){
-           if(is_file($file))
-               unlink($file);
-       }
-       unlik($dir);
+  public function clearDir($dir)
+  {
+     $files = glob($dir.'/*');
+     foreach($files as $file){
+         if(is_file($file))
+             unlink($file);
+     }
+     unlik($dir);
   }
 }

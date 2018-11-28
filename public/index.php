@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" required>
+                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" pattern=".{2,30}" required>
                 </div>
 
                 <div class="form-group">

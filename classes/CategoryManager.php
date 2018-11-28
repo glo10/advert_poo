@@ -35,8 +35,8 @@
 
     public function findById($id) {
       $query = $this->pdo->prepare(
-                                    ' SELECT *
-                                      FROM team
+                                    ' SELECT label
+                                      FROM category
                                       WHERE id = :id'
                                     );
       $query->execute(array(':id' => $id));
@@ -45,11 +45,10 @@
       if(!$row)
         return null;
 
-      $team = new Team(
-        $row->name, intval($row->yearFoundation), $row->league, $row->stadium, $row->coach);
-      $team->setId(intval($row->id));
+      $category = new Category($row->label);
+      $category->setId(intval($row->id));
 
-      return $team;
+      return $category;
     }
 
     public function findByIdJoin($id){
