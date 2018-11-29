@@ -1,6 +1,7 @@
 <?php
-  require_once 'FilterException.php';
-  require_once 'Photo.php';
+  namespace Advert_poo\Classes;
+  use Advert_poo\Classes\FilterException;
+  use Advert_poo\Classes\Photo;
 
   class Advert {
     private $id;
@@ -30,7 +31,7 @@
 
       try
       {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
+        $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch (PDOException $e)
       {
          echo 'La connexion n\'a pas pû être établi avec la base de données, veuillez recommencer ultérieurement ou signaler le prblème à l\'administrateur du site web';
@@ -222,7 +223,7 @@
       $select->bindParam(':id_advert',$id);
       $select->execute();
       $photos = [];
-      while($row = $select->fetch(PDO::FETCH_OBJ))
+      while($row = $select->fetch(\PDO::FETCH_OBJ))
       {
         $photo = new Photo($row->src,$row->id_photo);
         $photos[] = $photo;

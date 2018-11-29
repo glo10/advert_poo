@@ -1,5 +1,7 @@
 <?php
-  class FilterException  extends Exception
+  namespace Advert_poo\Classes;
+  
+  class FilterException  extends \Exception
   {
     protected $message;
     function __construct(String $message)
@@ -9,7 +11,7 @@
 
     function setMessage(String $message)
     {
-      $sanitize = filter_var($message,FILTER_SANITIZE_STRING);
+      $sanitize = \filter_var($message,FILTER_SANITIZE_STRING);
       return $this->message = $sanitize;
     }
 

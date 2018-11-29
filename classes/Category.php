@@ -1,5 +1,5 @@
 <?php
-
+  namespace Advert_poo\Classes;
   class Category {
     private $id;
     private $label;
@@ -13,7 +13,7 @@
         $this->setAdvertCollection($advertCollection);
 
       try {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
+        $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch (PDOException $e) {
         var_dump($e);
       }

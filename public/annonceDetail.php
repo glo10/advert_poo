@@ -2,7 +2,7 @@
   session_start();
   require_once '../classes/AdvertManager.php';
   require_once '../classes/Advert.php';
-  $advertManager = new AdvertManager();
+  $advertManager = new Advert_poo\Classes\AdvertManager();
   $advert = null;
   if(isset($_GET['id']) && preg_match('/[0-9]*/',$_GET['id'])){
       try
@@ -38,7 +38,7 @@
                 }
                 else
                 {
-                  $photos = array(0 => new Photo('no_image.png',-1));
+                  $photos = array(0 => new Advert_poo\Classes\Photo('no_image.png',-1));
                 }
 
                 $html .= '<div class="flex-center">';

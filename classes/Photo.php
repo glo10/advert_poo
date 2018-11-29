@@ -1,5 +1,5 @@
 <?php
-
+  namespace Advert_poo\Classes;
   class Photo {
     private $id;
     private $src;
@@ -11,7 +11,7 @@
         $this->setId($id);
 
       try {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
+        $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch (PDOException $e) {
         var_dump($e);
       }

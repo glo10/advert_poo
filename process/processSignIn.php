@@ -1,4 +1,6 @@
 <?php
+    namespace Advert_poo\Process;
+    require_once '../classes/User.php';
     if(
         isset($_POST['email'])  &&
         !empty($_POST['email']) &&
@@ -6,14 +8,13 @@
         !empty($_POST['pswd'])
     )
     {
-        require_once '../classes/User.php';
         array_map('htmlspecialchars', $_POST);
         $email = $_POST['email'];
         $mdp = $_POST['pswd'];
 
         try
         {
-          $user = new User($email,null,null,$mdp,null);
+          $user = new \Advert_poo\Classes\User($email,null,null,$mdp,null);
           if($user = $user->connect())
           {
             if(session_id() == '' || !isset($_SESSION))

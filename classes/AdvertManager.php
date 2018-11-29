@@ -1,4 +1,5 @@
 <?php
+  namespace Advert_poo\Classes;
   require_once 'Advert.php';
   require_once 'Photo.php';
   require_once 'User.php';
@@ -12,7 +13,7 @@
 
     private function connect() {
       try {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
+        $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch(PDOException $e) {
         var_dump($e);
       }
@@ -57,7 +58,7 @@
       $adverts = [];
 
       if($query->execute()){
-        $rows = $query->fetchAll(PDO::FETCH_OBJ);
+        $rows = $query->fetchAll(\PDO::FETCH_OBJ);
 
         foreach($rows as $row) {
           try
@@ -105,7 +106,7 @@
       $select = $this->pdo->prepare($query);
       $select->execute([':email'=> $user->getEmail()]);
 
-      $rows = $select->fetchAll(PDO::FETCH_OBJ);
+      $rows = $select->fetchAll(\PDO::FETCH_OBJ);
 
       if(!$rows) return null;
 
@@ -155,9 +156,10 @@
                   ON              A.user = U.email
                   WHERE           A.id_advert = :id';
      $select = $this->pdo->prepare($query);
-     $select->bindParam(':id',intval($id));
+     $id = intval($id);
+     $select->bindParam(':id',$id);
      $select->execute();
-     $row = $select->fetch(PDO::FETCH_OBJ);
+     $row = $select->fetch(\PDO::FETCH_OBJ);
      if(!$row) return null;
       $user = new User($row->email,$row->first_name,$row->last_name);
       $advert = new Advert(

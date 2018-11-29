@@ -1,5 +1,5 @@
 <?php
-  require_once '../classes/FilterException.php';
+  namespace Advert_poo\Classes;
   //require_once 'MyPdo.php';
   class User {
     private $email;
@@ -21,7 +21,7 @@
         $this->setAdvertCollection($advertCollection);
 
       try {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=annonce', 'root', '');
+        $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch (PDOException $e) {
         var_dump($e);
       }
@@ -34,7 +34,7 @@
     public function getAdvertCollection() { return $this->advertCollection; }
 
 
-    public function setEmail($email)
+    public function setEmail(String $email)
     {
       if(filter_var($email,FILTER_VALIDATE_EMAIL))
         return $this->email = $email;
@@ -42,29 +42,43 @@
         throw new FilterException('L\'email n\'est pas au bon format');
     }
 
-    public function setPswd($pswd)
+    public function setPswd(String $pswd)
     {
-      if(strlen($pswd) >= 2)
+      if(\strlen($pswd) >= 2)
         return $this->pswd = $pswd;
       else
         throw new FilterException('Le mot de passe n\'a pas été hashé correctement');
     }
 
-    public function setFirstName($firstName)
+    public function setFirstName(String $firstName)
     {
-      $firstNameClean = filter_var($firstName,FILTER_SANITIZE_STRING);
-      return $this->firstName = $firstNameClean;
+      if(\strlen($firstName) < 2)
+      {
+        throw new FilterException('Le Prénom doit avoir au moins 2 caractères alphabétiques');
+      }
+      else
+      {
+        $firstNameClean = \filter_var($firstName,FILTER_SANITIZE_STRING);
+        return $this->firstName = $firstNameClean;
+      }
     }
 
-    public function setLastName($lastName)
+    public function setLastName(String $lastName)
     {
-      $lastNameClean = filter_var($lastName,FILTER_SANITIZE_STRING);
-      return $this->lastName = $lastNameClean;
+      if(\strlen($lastName) < 2)
+      {
+        throw new FilterException('Le nom doit avoir au moins 2 caractères alphabétiques');
+      }
+      else
+      {
+        $lastNameClean = \filter_var($lastName,FILTER_SANITIZE_STRING);
+        return $this->lastName = $lastNameClean;
+      }
     }
 
     public function setAdvertCollection(array $advertCollection)
     {
-      if(is_array($advertCollection))
+      if(\is_array($advertCollection))
         return $this->advertCollection = $advertCollection;
       else
         throw new FilterException('Le format des annonces n\est pas correct');
@@ -88,7 +102,7 @@
       return $insert->execute(
         array(
           ":email" => $this->getEmail(),
-          ":pswd" =>  password_hash($this->getPswd(),PASSWORD_BCRYPT),
+          ":pswd" =>  \password_hash($this->getPswd(),PASSWORD_BCRYPT),
           ":last_name" => $this->getLastName(),
           ":first_name" => $this->getFirstName()
         )
@@ -121,7 +135,7 @@
       $select->bindParam(':email',$email);
 
       $select->execute();
-      if($result = $select->fetch(PDO::FETCH_OBJ))
+      if($result = $select->fetch(\PDO::FETCH_OBJ))
       {
         if(password_verify($this->getPswd(),$result->pswd))
         {

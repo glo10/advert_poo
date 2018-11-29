@@ -1,9 +1,11 @@
 <?php
-  session_start();
-    require '../classes/User.php';
-  require '../classes/PhotoManager.php';
 
-  $photoManager = new PhotoManager();
+  session_start();
+  require '../classes/User.php';
+  require '../classes/PhotoManager.php';
+  require '../classes/Advert.php';
+
+  $photoManager = new Advert_poo\Classes\PhotoManager();
   $title              = htmlspecialchars($_POST['title']);
   $text               = htmlspecialchars($_POST['text']);
   $date               = '01/01/1991 10:10';
@@ -12,11 +14,11 @@
   $pc                 = htmlspecialchars($_POST['pc']);
   $likes              = 0;
   $category           = htmlspecialchars($_POST['category']);
-  $user               = new User($_SESSION['email']);
+  $user               = new Advert_poo\Classes\User($_SESSION['email']);
 
   try
   {
-    $advert = new Advert(
+    $advert = new Advert_poo\Classes\Advert(
                           $title,
                           $text,
                           $date,

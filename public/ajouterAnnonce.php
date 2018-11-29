@@ -4,7 +4,7 @@
     header('location:index.php?connect=-1');
   require_once '../classes/CategoryManager.php';
   require_once '../classes/Category.php';
-  $categoryManager = new CategoryManager();
+  $categoryManager = new \Advert_poo\Classes\CategoryManager();
   $categories = $categoryManager->findAll();
 ?>
 

@@ -1,11 +1,10 @@
 <?php
   session_start();
-
   require_once '../classes/AdvertManager.php';
   require_once '../classes/Advert.php';
   require_once '../classes/MyFunctions.php';
 
-  $advertManager = new AdvertManager();
+  $advertManager = new Advert_poo\Classes\AdvertManager();
   $search = isset($_POST['search'])?htmlspecialchars($_POST['search']):null;
   $adverts = null;
   try
@@ -49,9 +48,9 @@
                     $html .= '<div class="card-body">';
                       $html .= '<h5 class="card-title glyphicon glyphicon-text-width">&nbsp;'.$advert->getTitle().'</h5>';
                       $html .= '<p><span class="glyphicon glyphicon-map-marker">&nbsp;'.$advert->getCity().'</span></p>';
-                      $html .= '<p class="glyphicon glyphicon-list-alt card-text">&nbsp;'.MyFunctions::showLessText($advert->getText(),15).'</p>';
+                      $html .= '<p class="glyphicon glyphicon-list-alt card-text">&nbsp;'.Advert_poo\Classes\MyFunctions::showLessText($advert->getText(),15).'</p>';
                       $html .= '<p><span class="glyphicon glyphicon-tag">&nbsp;'.$advert->getCategory().'</span></p>';
-                      $html .= '<p><span class="glyphicon glyphicon-user">&nbsp;'.MyFunctions::showLessText($advert->getUser()->getFirstName(),15).'</span></p>';
+                      $html .= '<p><span class="glyphicon glyphicon-user">&nbsp;'.Advert_poo\Classes\MyFunctions::showLessText($advert->getUser()->getFirstName(),15).'</span></p>';
                       $html .= '<div class="flex-between">';
                       $html .= '<div><a href="annonceDetail.php?id='. $advert->getId() .'"><span class="glyphicon glyphicon-eye-open"></span></a></div>';
                       $html .= '<div><span data-id="'.$advert->getId().'" data-likes="'.$advert->getLikes().'" class="glyphicon glyphicon-heart text-danger"></span>&nbsp;<span>' .$advert->getLikes() . '</span></div>';

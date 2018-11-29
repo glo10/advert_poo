@@ -5,8 +5,8 @@
   require_once '../classes/AdvertManager.php';
   require_once '../classes/Advert.php';
 
-  $user = new User($_SESSION['email']);
-  $advertManager = new AdvertManager();
+  $user = new Advert_poo\Classes\User($_SESSION['email']);
+  $advertManager = new Advert_poo\Classes\AdvertManager();
   $adverts = $advertManager->findByUser($user);
 ?>
 <!DOCTYPE html>
