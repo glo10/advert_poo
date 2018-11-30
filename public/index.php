@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
     <?php include 'inc/css.inc.php' ?>
-    <title>Connexion/Inscription</title>
+    <title>Authentification</title>
 </head>
 <body>
     <div class="container">
@@ -25,7 +25,7 @@
             <button class="btn btn-default btnSign" data-content="#signUp" data-hide="#signIn">Inscription</button>
         </div>
         <div>
-        <p id="userMsg" class="text-info"></p>
+          <p id="userMsg" class="text-info"></p>
         </div>
         <div id="signIn">
             <h3 class="text-info">Connexion</h3>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" pattern=".{2,30}" required>
+                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" pattern=".{8,30}" required>
                 </div>
 
                 <div class="form-group">
@@ -46,21 +46,25 @@
 
         <div id="signUp">
             <h3 class="text-info">Inscription</h3>
+            <p class="text-info">
+              <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+              <span>Le mot de passe doit avoir entre 8 et 30 caractères alphanumériques</span>
+            </p>
             <form data-url="../process/processSignUp.php">
                 <div class="form-group">
-                    <input type="text" name="lastName" class="form-control col-4" placeholder="Saisir votre nom">
+                    <input type="text" name="lastName" class="form-control col-4" placeholder="Saisir votre nom" pattern=".{2,80}" required>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" name="firstName" class="form-control col-4" placeholder="Saisir votre prénom">
+                    <input type="text" name="firstName" class="form-control col-4" placeholder="Saisir votre prénom" pattern=".{2,80}" required>
                 </div>
 
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control col-4" placeholder="Saisir votre email">
+                    <input type="email" name="email" class="form-control col-4" placeholder="Saisir votre email" required>
                 </div>
 
                  <div class="form-group">
-                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe">
+                    <input type="password" name="pswd" class="form-control col-4" placeholder="Saisir votre mot de passe" pattern=".{8,30}" required>
                 </div>
 
                 <div class="form-group">

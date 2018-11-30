@@ -44,7 +44,7 @@
 
     public function setPswd(String $pswd)
     {
-      if(\strlen($pswd) >= 2)
+      if(\strlen($pswd) >= 8 && \preg_match('#[^\s]{8,}#',$pswd) && \strlen($pswd) <= 30)
         return $this->pswd = $pswd;
       else
         throw new FilterException('Le mot de passe n\'a pas été hashé correctement');
