@@ -1,5 +1,7 @@
 <?php
   namespace Advert_poo\Classes;
+  use Advert_poo\Classes\FilterException;
+  require_once 'FilterException.php';
   //require_once 'MyPdo.php';
   class User {
     private $email;
@@ -44,10 +46,10 @@
 
     public function setPswd(String $pswd)
     {
-      if(\strlen($pswd) >= 2)
+      if(\strlen($pswd) >= 8 && \preg_match('#[^\s]{8,}#',$pswd) && \strlen($pswd) <= 30)
         return $this->pswd = $pswd;
       else
-        throw new FilterException('Le mot de passe n\'a pas été hashé correctement');
+        throw new FilterException('Le mot de passe n\'est pas conforme aux exigences requises');
     }
 
     public function setFirstName(String $firstName)
@@ -137,7 +139,7 @@
       $select->execute();
       if($result = $select->fetch(\PDO::FETCH_OBJ))
       {
-        if(password_verify($this->getPswd(),$result->pswd))
+        if(\password_verify($this->getPswd(),$result->pswd))
         {
           $this->setFirstName($result->first_name);
           $this->setLastName($result->last_name);

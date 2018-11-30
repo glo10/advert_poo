@@ -1,7 +1,8 @@
 <?php
   namespace Advert_poo\Classes;
-  //require_once 'Photo.php';
-  //require_once 'Advert.php';
+  use Advert_poo\Classes\Photo;
+  require_once 'Photo.php';
+  require_once 'Advert.php';
 
   class PhotoManager {
     private $pdo = null;

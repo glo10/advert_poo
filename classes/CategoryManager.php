@@ -25,7 +25,7 @@
 
       $categories = [];
       foreach($rows as $row) {
-        $category = new Category($row->label);
+        $category = new namespace\Category($row->label);
 
         $category->setId($row->id_category);
         array_push($categories, $category);
@@ -40,14 +40,14 @@
                                       FROM category
                                       WHERE id = :id'
                                     );
-      $query->execute(array(':id' => $id));
+      $query->execute(\array(':id' => $id));
       $row = $query->fetch(\PDO::FETCH_OBJ);
 
       if(!$row)
         return null;
 
-      $category = new Category($row->label);
-      $category->setId(intval($row->id));
+      $category = new namespace\Category($row->label);
+      $category->setId(\intval($row->id));
 
       return $category;
     }

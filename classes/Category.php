@@ -15,7 +15,7 @@
       try {
         $this->pdo = new \PDO('mysql:host=localhost;dbname=annonce', 'root', '');
       } catch (PDOException $e) {
-        var_dump($e);
+        \var_dump($e);
       }
     }
 
@@ -26,24 +26,24 @@
 
     public function setId($id)
     {
-      if(filter_var($id,FILTER_VALIDATE_INT) !== false)
+      if(\filter_var($id,FILTER_VALIDATE_INT) !== false)
         return $this->id = $id;
       else
-        throw new FilterException('L\identifiiant n\'est pas un entier');
+        throw new namespace\FilterException('L\identifiiant n\'est pas un entier');
     }
 
     public function setLabel($label)
     {
-      $labelClean = filter_var($label,FILTER_SANITIZE_STRING);
+      $labelClean = \filter_var($label,FILTER_SANITIZE_STRING);
       return $this->label = $labelClean;
     }
 
     public function setAdvertCollection(array $advertCollection)
     {
-      if(is_array($advertCollection))
+      if(\is_array($advertCollection))
         return $this->advertCollection = $advertCollection;
       else
-        throw new FilterException('Le format n\'est pas un tableau');
+        throw new namespace\FilterException('Le format n\'est pas un tableau');
 
     }
 

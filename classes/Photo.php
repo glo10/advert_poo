@@ -1,5 +1,6 @@
 <?php
   namespace Advert_poo\Classes;
+
   class Photo {
     private $id;
     private $src;
@@ -26,7 +27,7 @@
       if(filter_var($id,FILTER_VALIDATE_INT) !== false)
         return $this->id = $id;
       else
-        throw new FilterException('L\identifiiant n\'est pas un entier');
+        throw new namespace\FilterException('L\identifiiant n\'est pas un entier');
     }
 
     public function setSrc($src)
@@ -36,7 +37,7 @@
       if(preg_match('#([\.](jpg|png|jpeg))$#',$srcClean))
         return $this->src = $srcClean;
       else
-        throw new FilterException('L\'url de la photo n\'est pas au bon format');
+        throw new namespace\FilterException('L\'url de la photo n\'est pas au bon format');
     }
 
     public function save(){

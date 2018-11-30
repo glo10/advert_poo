@@ -53,71 +53,71 @@
 
     public function setId($id)
     {
-      if(filter_var($id,FILTER_VALIDATE_INT) !== false)
+      if(\filter_var($id,FILTER_VALIDATE_INT) !== false)
         return $this->id = $id;
       else
-        throw new FilterException('L\identifiiant n\'est pas un entier');
+        throw new namespace\FilterException('L\identifiiant n\'est pas un entier');
     }
 
     public function setTitle(String $title)
     {
-      $titleClean = filter_var($title, FILTER_SANITIZE_STRING);
+      $titleClean = \filter_var($title, FILTER_SANITIZE_STRING);
       return $this->title = $titleClean;
     }
 
     public function setText(String $text)
     {
-      $textClean = filter_var($text, FILTER_SANITIZE_STRING);
+      $textClean = \filter_var($text, FILTER_SANITIZE_STRING);
       return $this->text = $textClean;
     }
 
     public function setDate(String $date)
     {
-      if(preg_match('#(0[1-9]|1[0-9]|2[0-9]|3[01])\\/(0[1-9]|1[012])\\/(19|20)[0-9]{2}[\\s][0-9]{2}[:][0-9]{2}#',$date))
+      if(\preg_match('#(0[1-9]|1[0-9]|2[0-9]|3[01])\\/(0[1-9]|1[012])\\/(19|20)[0-9]{2}[\\s][0-9]{2}[:][0-9]{2}#',$date))
         return $this->date = $date;
       else
-        throw new FilterException('La date n\'est pas au format jj-mm-aaaa');
+        throw new namespace\FilterException('La date n\'est pas au format jj-mm-aaaa');
 
     }
 
     public function setAddr(String $addr)
     {
-      $addrClean = filter_var($addr, FILTER_SANITIZE_STRING);
+      $addrClean = \filter_var($addr, FILTER_SANITIZE_STRING);
       return $this->addr = $addrClean;
     }
 
     public function setCity(String $city)
     {
-      $cityClean = filter_var($city,FILTER_SANITIZE_STRING);
+      $cityClean = \filter_var($city,FILTER_SANITIZE_STRING);
       return $this->city = $cityClean;
     }
 
     public function setPc(String $pc)
     {
-      if(preg_match('#[1-9][0-9]{4}#',$pc))
+      if(\preg_match('#[1-9][0-9]{4}#',$pc))
         return $this->pc = $pc;
       else
-        throw new FilterException('Le code postal ne contient pas 5 chiffres');
+        throw new namespace\FilterException('Le code postal ne contient pas 5 chiffres');
     }
 
     public function setLikes($likes)
     {
-      if(filter_var(intval($likes),FILTER_VALIDATE_INT) !== false)
+      if(\filter_var(\intval($likes),FILTER_VALIDATE_INT) !== false)
         return $this->likes = $likes;
       else
-        throw new FilterException('Le like n\est pas un entier');
+        throw new namespace\FilterException('Le like n\est pas un entier');
     }
 
     public function setCategory(String $category)
     {
-      $categoryClean = filter_var($category,FILTER_SANITIZE_STRING);
+      $categoryClean = \filter_var($category,FILTER_SANITIZE_STRING);
       return $this->category = $categoryClean;
     }
 
     public function setUser(User $user)
     {
       if($user == null)
-        throw new FilterException('Aucun utilisateur n\'a été récupéré');
+        throw new namespace\FilterException('Aucun utilisateur n\'a été récupéré');
       return $this->user = $user;
     }
 
@@ -126,7 +126,7 @@
       if(is_array($photos))
         return $this->photoCollection = $photos;
       else
-        throw new FilterException('Les photos n\'ont pas été récupéré correctement');
+        throw new namespace\FilterException('Les photos n\'ont pas été récupéré correctement');
     }
 
     public function save()
@@ -225,7 +225,7 @@
       $photos = [];
       while($row = $select->fetch(\PDO::FETCH_OBJ))
       {
-        $photo = new Photo($row->src,$row->id_photo);
+        $photo = new namespace\Photo($row->src,$row->id_photo);
         $photos[] = $photo;
       }
       return $photos;

@@ -63,8 +63,8 @@
         foreach($rows as $row) {
           try
           {
-            $user = new User($row->email,$row->first_name,$row->last_name);
-            $advert = new Advert(
+            $user = new namespace\User($row->email,$row->first_name,$row->last_name);
+            $advert = new namespace\Advert(
                                   $row->title,
                                   $row->text,
                                   $row->date,
@@ -79,7 +79,7 @@
             $advert->setId($row->id_advert);
             array_push($adverts,$advert);
           }
-          catch(FilterException $e){
+          catch(namespace\FilterException $e){
             echo $e->showError();
           }
         }
@@ -112,8 +112,8 @@
 
       $adverts = [];
       foreach($rows as $row){
-        $user = new User($row->user);
-        $advert = new Advert(
+        $user = new namespace\User($row->user);
+        $advert = new namespace\Advert(
                               $row->title,
                               $row->text,
                               $row->date,
@@ -161,8 +161,8 @@
      $select->execute();
      $row = $select->fetch(\PDO::FETCH_OBJ);
      if(!$row) return null;
-      $user = new User($row->email,$row->first_name,$row->last_name);
-      $advert = new Advert(
+      $user = new namespace\User($row->email,$row->first_name,$row->last_name);
+      $advert = new namespace\Advert(
                             $row->title,
                             $row->text,
                             $row->date,

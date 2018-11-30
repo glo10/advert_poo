@@ -1,4 +1,6 @@
 <?php
+  use Advert_poo\classes\User;
+
     if(
         isset($_POST['lastName'])   &&
         !empty($_POST['lastName'])  &&
@@ -9,8 +11,8 @@
         isset($_POST['pswd'])       &&
         !empty($_POST['pswd'])
     ){
-        array_map('htmlspecialchars', $_POST);
         require_once '../classes/User.php';
+        array_map('htmlspecialchars', $_POST);
         $user = new User($_POST['email'],$_POST['pswd']);
         $user->setLastName($_POST['lastName']);
         $user->setFirstName($_POST['firstName']);

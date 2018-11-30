@@ -1,6 +1,10 @@
 <?php
+  use Advert_poo\Classes\Advert;
+  use Advert_poo\Classes\User;
 
   require '../classes/Advert.php';
+  require '../classes/User.php';
+  
   $request = file_get_contents('php://input');
   //$request = json_encode(['id' => 2,"likes" => 0, "update" =>false]);
   $data = json_decode($request);
